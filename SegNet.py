@@ -58,7 +58,7 @@ class SegNet:
             self.with_dropout_pl = tf.placeholder(tf.bool, name="with_dropout")
             self.keep_prob_pl = tf.placeholder(tf.float32, shape=None, name="keep_rate")
             self.inputs_pl = tf.placeholder(tf.float32, [None, self.input_h, self.input_w, self.input_c], name="input")
-            self.labels_pl = tf.placeholder(tf.int64, [None, self.input_h, self.input_w, 1])
+            self.labels_pl = tf.placeholder(tf.int64, [None, self.input_h, self.input_w, 3])
 
             # Before enter the images into the architecture, we need to do Local Contrast Normalization
             # But it seems a bit complicated, so we use Local Response Normalization which implement in Tensorflow
@@ -309,7 +309,7 @@ class SegNet:
             for image_batch, label_batch in zip(images,labels):
                 
                 image_batch = np.reshape(image_batch,[1,image_h,image_w,image_c])
-                label_batch = np.reshape(label_batch,[1,image_h,image_w,1])
+                label_batch = np.reshape(label_batch,[1,image_h,image_w,3])
                 
                 if FLAG_BAYES is False:
                     fetches = [prediction]
