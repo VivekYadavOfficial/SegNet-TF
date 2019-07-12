@@ -1,6 +1,6 @@
 import json
 import os
-
+import cv2
 import tensorflow as tf
 import numpy as np
 import random
@@ -25,7 +25,7 @@ class SegNet:
             print("No VGG path in config, so learning from scratch")
         else:
             self.vgg16_npy_path = self.config["VGG_FILE"]
-            self.vgg_param_dict = np.load(self.vgg16_npy_path, encoding='latin1').item()
+            self.vgg_param_dict = np.load(self.vgg16_npy_path, encoding='latin1', allow_pickle=True).item()
             print("VGG parameter loaded")
 
         self.train_file = self.config["TRAIN_FILE"]
@@ -362,7 +362,7 @@ class SegNet:
         
         i_width = 480
         i_height = 360
-        images = [misc.imresize(image, (i_height, i_width)) for image in images]
+        images = [cv2.resize(image, (i_height, i_width)) for image in images]
         
         image_w = self.config["INPUT_WIDTH"]
         image_h = self.config["INPUT_HEIGHT"]
