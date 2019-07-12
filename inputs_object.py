@@ -5,7 +5,7 @@ import os
 import numpy as np
 import scipy
 from scipy import misc
-
+import cv2
 
 def get_filename_list(path, config):
     fd = open(path)
@@ -103,8 +103,8 @@ def get_all_test_data(im_list, la_list):
     labels = []
     index = 0
     for im_filename, la_filename in zip(im_list, la_list):
-        im = scipy.misc.imread(im_filename)
-        la = scipy.misc.imread(la_filename)
+        im = cv2.imread(im_filename)
+        la = cv2.imread(la_filename)
         images.append(im)
         labels.append(la)
         index = index + 1
